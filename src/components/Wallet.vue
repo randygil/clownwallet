@@ -19,6 +19,12 @@ function updateCoin (coin) {
   store.dispatch('updateCoin', coin)
 }
 
+function resetCoins () {
+  store.dispatch('resetCoins')
+}
+
+store.dispatch('updateTotal')
+
 
 </script>
 
@@ -26,7 +32,7 @@ function updateCoin (coin) {
   <div class="pt-10 mb-10 flex justify-center">
     <div class="flex-auto ">
       <dd class="text-center">Balance</dd>
-      <h1 class="text-center text-4xl">{{ total }}</h1>
+      <h1 class="text-center text-4xl">{{ total }} USDT</h1>
     </div>
   </div>
 
@@ -34,4 +40,20 @@ function updateCoin (coin) {
   <List>
     <ListItem @save="updateCoin" v-for="coin in coins" :key="coin.token" :coin="coin" />
   </List>
+  <div class="mt-3 p-3 flex justify-end">
+    <button class="btn btn-blue" @click="resetCoins">Reiniciar</button>
+  </div>
+
 </template>
+
+<style>
+  .btn {
+    @apply font-bold py-2 px-4 rounded;
+  }
+  .btn-blue {
+    @apply bg-blue-500 text-white;
+  }
+  .btn-blue:hover {
+    @apply bg-blue-700;
+  }
+</style>

@@ -18,7 +18,7 @@ export default {
   <article @dblclick="editMode = true" class="p-4 flex space-x-4">
     <div class="flex items-center">
       <img
-        src="https://s2.coinmarketcap.com/static/img/coins/64x64/11422.png"
+        :src="coin.icon"
         alt=""
         class="flex-none icon rounded-lg object-cover"
       />

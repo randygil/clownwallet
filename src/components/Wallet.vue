@@ -1,13 +1,25 @@
 <script setup>
 import List from "./List.vue";
 import ListItem from "./ListItem.vue";
-// import store
-import store from "../store";
 
-// Get coins from store
-const coins = store.state.coins;
-const total = store.state.total;
-const updateCoin = store.dispatch.bind(store, "updateCoin");
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const coins = computed(function () {
+  return store.state.coins;
+})
+
+const total = computed(function () {
+  return store.state.total;
+})
+
+function updateCoin (coin) {
+  store.dispatch('updateCoin', coin)
+}
+
+
 </script>
 
 <template>

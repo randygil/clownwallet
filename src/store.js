@@ -49,7 +49,6 @@ const store = createStore({
         
       },
       updateCoins(state, coins) {
-        console.log(coins)
         state.coins = coins
         localStorage.setItem('coins', JSON.stringify(state.coins))
       },
@@ -63,18 +62,17 @@ const store = createStore({
         dispatch('updateTotal')
       },
       async updateTotal ({ commit, dispatch, state }) {
-
-       const coins = await Promise.all(this.state.coins.map(async (coin) => {
-          const price = await this.dispatch('getPrice', coin.symbol)
-          console.log('price', price)
-          return { ...coin, price: parseFloat(price), balanceUSDT: (coin.balance * coin.price).toFixed(2) }
+       const coins = await Promise.all(state.coins.map(async (coin) => {
+          const price = await dispatch('getPrice', coin.symbol)
+          const priceToFixed = parseFloat(price).toFixed(2)
+          return { ...coin, price: priceToFixed, balanceUSDT: (coin.balance * coin.price).toFixed(2) }
         }))
         const total = coins.reduce((total, coin) => total + parseFloat(coin.balanceUSDT), 0)
         commit('updateTotal', total)
         commit('updateCoins', coins)
       },
       async getPrice ({ commit, state }, symbol) {
-        const coin = this.state.coins.find(c => c.symbol === symbol)
+        const coin = state.coins.find(c => c.symbol === symbol)
         let price
         if (coin.provider === 'pancakeswap') {
           const { data } = (await axios.get(`https://api.pancakeswap.info/api/v2/tokens/${coin.token}`)).data

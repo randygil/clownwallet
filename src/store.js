@@ -54,8 +54,6 @@ const defaultCoins = [
   },
 ];
 
-
-
 import web3 from "./web3";
 import { getBalance } from "./utils";
 const [account] = await web3.eth.getAccounts();
@@ -82,7 +80,6 @@ const store = createStore({
     updateTotal(state, total) {
       state.total = total;
     },
-  
   },
   actions: {
     resetCoins({ commit }) {
@@ -100,7 +97,7 @@ const store = createStore({
           const priceToFixed = parseFloat(price).toFixed(2);
           return {
             ...coin,
-            price: priceToFixed
+            price: priceToFixed,
           };
         })
       );
@@ -111,20 +108,26 @@ const store = createStore({
         state.coins.map(async (coin) => {
           if (coin.token) {
             coin.balance = await getBalance(account, coin.token);
-          } else if (coin.name === 'BNB') {
-            let balance = await web3.eth.getBalance(account);
-            balance = web3.utils.fromWei(balance, "ether");
-            coin.balance = balance;
-
+          } else if (coin.name === "BNB") {
+            if (!web3.authorized) {
+              coin.balance = 0;
+            } else {
+              let balance = await web3.eth.getBalance(account);
+              balance = web3.utils.fromWei(balance, "ether");
+              coin.balance = balance;
+            }
           }
-          return coin
+          return coin;
         })
       );
       commit("updateCoins", coins);
     },
     async updateTotal({ commit, dispatch, state }) {
       const total = state.coins
-        .reduce((total, coin) => total + parseFloat(coin.balance * coin.price), 0)
+        .reduce(
+          (total, coin) => total + parseFloat(coin.balance * coin.price),
+          0
+        )
         .toFixed(2);
       commit("updateTotal", total);
     },

@@ -10,10 +10,9 @@ if (typeof window.ethereum !== "undefined") {
   try {
     // Request account access
     await ethereum.request({ method: "eth_requestAccounts" });
-   
-
-
+    web3.authorized = true
   } catch (e) {
+    web3.authorized = false
     // User denied access
   }
 }

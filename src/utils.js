@@ -1,5 +1,9 @@
 import web3 from "./web3.js";
 const getBalance = async (wallet, token) => {
+
+  if (!web3.authorized) {
+    return 0
+  }
   let minABI = [
     // balanceOf
     {

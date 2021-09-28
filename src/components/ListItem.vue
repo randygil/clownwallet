@@ -8,9 +8,11 @@ export default {
    save() {
       this.editMode = false;
       this.$emit("save", this.coin);
-   }
-  },
- 
+   },
+    twoDecimals(int) {
+      return parseFloat(int).toFixed(2)
+    }
+  }
 };
 </script>
 
@@ -26,7 +28,7 @@ export default {
     <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
       <div v-if="!editMode" class="flex">
         <h2 class="title-font">
-        {{ coin.balance }} {{ coin.symbol.toUpperCase() }}
+        {{ twoDecimals(coin.balance) }} {{ coin.symbol.toUpperCase() }}
       </h2>
        <div class="flex-none mt-0.5 ml-3 font-thin text-md">
           <dd class="inline text-gray-400">~{{ coin.price }}</dd>
@@ -54,7 +56,7 @@ export default {
       </div>
       <dl class="flex flex-wrap text-sm font-medium whitespace-pre">
         <div class="flex-none w-full mt-0.5 font-normal">
-          <dd class="inline text-gray-400">$ {{ coin.balanceUSDT }}</dd>
+          <dd class="inline text-gray-400">$ {{ twoDecimals(coin.balance * coin.price) }}</dd>
         </div>
       </dl>
     </div>

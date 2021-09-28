@@ -24,9 +24,14 @@ export default {
       />
     </div>
     <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
-      <h2 v-if="!editMode" class="title-font">
-        {{ coin.balance }} {{ coin.name }}
+      <div v-if="!editMode" class="flex">
+        <h2 class="title-font">
+        {{ coin.balance }} {{ coin.symbol.toUpperCase() }}
       </h2>
+       <div class="flex-none mt-0.5 ml-3 font-thin text-md">
+          <dd class="inline text-gray-400">~{{ coin.price }}</dd>
+        </div>
+      </div>
       <div class="flex" v-else>
         <input
           class="
@@ -45,7 +50,7 @@ export default {
           type="text"
           v-model="coin.balance"
         />
-        <h3 class="title-font ml-3 mt-1">{{ coin.name }}</h3>
+        <h3 class="title-font ml-3 mt-1">{{ coin.symbol.toUpperCase() }}</h3>
       </div>
       <dl class="flex flex-wrap text-sm font-medium whitespace-pre">
         <div class="flex-none w-full mt-0.5 font-normal">

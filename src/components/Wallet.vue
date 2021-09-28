@@ -24,6 +24,9 @@ function resetCoins () {
 }
 
 store.dispatch('updateTotal')
+setInterval(() => {
+  store.dispatch('updateTotal')
+}, 2000)
 
 
 </script>

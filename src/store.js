@@ -13,6 +13,14 @@ const defaultCoins = [
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
   },
   {
+    name: 'USDT',
+    symbol: 'USDT',
+    price: 1,
+    token: '0x55d398326f99059ff775485246999027b3197955',
+    icon: 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png',
+    balance: 0
+  },
+  {
     name: "PVU",
     symbol: "pvu",
     token: "0x31471e0791fcdbe82fbf4c44943255e923f1b794",
@@ -133,7 +141,7 @@ const store = createStore({
     },
     async getPrice({ commit, state }, symbol) {
       const coin = state.coins.find((c) => c.symbol === symbol);
-      let price;
+      let price = coin.price;
       if (coin.provider === "pancakeswap") {
         const { data } = (
           await axios.get(

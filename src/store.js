@@ -64,7 +64,11 @@ const defaultCoins = [
 
 import web3 from "./web3";
 import { getBalance } from "./utils";
-const [account] = await web3.eth.getAccounts();
+let account 
+
+web3.eth.getAccounts().then(acc => {
+  account = acc[0]
+})
 
 const coinStorage = JSON.parse(localStorage.getItem("coins"));
 let coins = coinStorage || defaultCoins;

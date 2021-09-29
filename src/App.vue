@@ -5,7 +5,7 @@ import Wallet from "./components/Wallet.vue";
 </script>
 
 <template>
-  <div class="page mt-10 flex justify-center">
+  <div class="page mt-md-10 flex justify-center">
     <div class="main-wallet rounder-corner">
       <Wallet></Wallet>
     </div>
@@ -16,6 +16,12 @@ import Wallet from "./components/Wallet.vue";
 .main-wallet {
   width: 40%;
   border: 1px solid #ccc;
+}
+@media screen and (max-width: 1024px) {
+  .main-wallet {
+    width: 100%;
+  }
+  
 }
 
 </style>
